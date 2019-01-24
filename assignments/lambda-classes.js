@@ -162,8 +162,9 @@ const cam = new Instructor({
     catchPhrase: `Don't forget the gnomies`
   });
 
-console.log(fred);
-console.log(cam);
+console.log('Testing Instructor instantiation');
+console.log(JSON.stringify(fred));
+console.log(JSON.stringify(cam));
 
 
 // Students
@@ -179,7 +180,7 @@ const louis = new Student({
 
 const matt = new Student({
     name: 'Matt',
-    location: 'Tennessee',
+    location: 'Fullerton, CA',
     age: 33,
     gender: 'male',
     previousBackground : 'None',
@@ -187,8 +188,9 @@ const matt = new Student({
     favSubjects : ['Front End', 'Javascript']
 });
 
-console.log(louis);
-console.log(matt);
+console.log('Testing Student instantiation');
+console.log(JSON.stringify(louis));
+console.log(JSON.stringify(matt));
 
 // Project Managers
 
@@ -216,35 +218,44 @@ const gannon = new ProjectManager({
     favInstructor: 'Cameron Pope'
   });
 
-  console.log(gannon);
-  console.log(carlos);
+  console.log('Testing Project Manager instantiation');
+  console.log(JSON.stringify(gannon));
+  console.log(JSON.stringify(carlos));
 
   /* Test Methods */
-
+console.log('Testing Instructor Demo()');
 fred.demo('Javascript-IV');
 cam.demo('Preprocessors-II');
 
+console.log('Testing Instructor Grade()');
 fred.grade(louis, 'Javascript-IV');
 cam.grade(matt, 'Preprocessors-II');
 
+console.log('Testing Instructor gradeAssignment()');
 fred.gradeAssignment(louis);
 cam.gradeAssignment(matt);
 
+console.log('Testing Student listsSubjects()');
 louis.listsSubjects();
 matt.listsSubjects();
 
+console.log('Testing Student PRAssignment()');
 louis.PRAssignment('Javascript-IV');
 matt.PRAssignment('Javascript-III');
 
+console.log('Testing Student sprintChallenge()');
 louis.sprintChallenge('Javascript-IV');
 matt.sprintChallenge('Javascript-III');
 
+console.log('Testing Student graduate()');
 console.log(louis.graduate());
 console.log(matt.graduate());
 
+console.log('Testing Project Manager standUp()');
 gannon.standUp('WEBPT4-Gannon');
 carlos.standUp('WEBPT4-Carlos');
 
+console.log('Testing Project Manager debugCode()');
 gannon.debugCode(matt, 'Javascript-III');
 carlos.debugCode(louis, 'Javascript-IV');
 
