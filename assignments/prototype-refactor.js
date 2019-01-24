@@ -24,13 +24,24 @@ Prototype Refactor
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method -> returns the string: 'Object was removed from the game.'
 */
-function GameObject (object) {
+/* function GameObject (object) {
     this.createdAt = object.createdAt,
     this.dimensions = object.dimensions
   }
   
   GameObject.prototype.destroy = function () {
     return `${this.name} was removed from the game.`;
+  }; */
+
+  class GameObject {
+    constructor(object){
+      this.createdAt = object.createdAt,
+      this.dimensions = object.dimensions
+    }
+
+    destroy () {
+      return `${this.name} was removed from the game.`;
+    }
   };
   
   /*
@@ -40,7 +51,7 @@ function GameObject (object) {
     * takeDamage() // prototype method -> returns the string '<object name> took damage.'
     * should inherit destroy() from GameObject's prototype
   */
-  function CharacterStats (object) {
+/*   function CharacterStats (object) {
     this.healthPoints = object.healthPoints,
     this.name = object.name
     GameObject.call(this, object);
@@ -48,6 +59,18 @@ function GameObject (object) {
   CharacterStats.prototype = Object.create(GameObject.prototype);
   CharacterStats.prototype.takeDamage = function() {
     return `${this.name} took damage.`;
+  } */
+
+  class CharacterStats extends GameObject {
+    constructor (object) {
+      super(object),
+      this.healthPoints = object.healthPoints,
+      this.name = object.name
+    }
+
+    takeDamage() {
+      return `${this.name} took damage.`;
+    }
   }
   
   /*
@@ -59,7 +82,7 @@ function GameObject (object) {
     * should inherit destroy() from GameObject through CharacterStats
     * should inherit takeDamage() from CharacterStats
   */
-  function Humanoid ( object ) {
+ /*  function Humanoid ( object ) {
     this.team = object.team,
     this.weapons = object.weapons,
     this.language = object.language,
@@ -71,6 +94,19 @@ function GameObject (object) {
   
   Humanoid.prototype.greet = function () {
     return (`${this.name} offers a greeting in ${this.language}.`);
+  } */
+
+  class Humanoid extends CharacterStats {
+    constructor (object) {
+      super(object),
+      this.team = object.team,
+      this.weapons = object.weapons,
+      this.language = object.language
+    }
+
+    greet () {
+      return `${this.name} offers a greeting in ${this.language}`;
+    }
   }
    
   /*
@@ -150,7 +186,7 @@ function GameObject (object) {
     // * Create two new objects, one a villain and one a hero and fight it out with methods!
   
     // Create hero constructor function
-    function Hero (object) {
+    /* function Hero (object) {
       //inherit from humanoid
       Humanoid.call(this, object);
       this.attackPower = object.attackPower
@@ -173,15 +209,44 @@ function GameObject (object) {
         console.log(`${enemy.name} has ${enemy.healthPoints} remaining.`);
       }
     }
+
+    */
+   class Hero extends Humanoid {
+     constructor (object) {
+       super(object),
+       this.attackPower = object.attackPower
+     }
+
+     attack(enemy) {
+       console.log(`${this.name} attacks ${enemy.name} for ${this.attackPower}`);
+
+       enemy.healthPoints -= this.attackPower;
+  
+      // if enemy is dead, then destroy 
+      if (enemy.healthPoints <= 0) {
+        console.log(enemy.destroy());
+      }
+      // otherwise display remaining hp
+      else {
+        console.log(`${enemy.name} has ${enemy.healthPoints} remaining.`);
+     }
+   }
+  }
   
     // create villain constructor function
-    function Villain (object) {
+    /* function Villain (object) {
       // inherit from hero
       Hero.call(this, object);
     }
   
     // inherit prototype from Hero
-    Villain.prototype = Object.create(Hero.prototype);
+    Villain.prototype = Object.create(Hero.prototype); */
+
+    class Villain extends Hero {
+      constructor (object) {
+        super(object)
+              }
+    }
   
     // Create Mario Hero
     const Mario = new Hero({
@@ -221,5 +286,5 @@ function GameObject (object) {
     });
   
     // Mario saves the day
-    console.log(Mario.attack(Bowser, 20));
+    Mario.attack(Bowser, 20); 
   
